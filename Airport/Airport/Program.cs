@@ -1,32 +1,82 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Airport
 {
     class Program
     {
-        /* 
-        * Структура рейса
-        * которая имеет такие поля как:
-        * Время вылета
-        * Время прилета
-        * Направление
-        * Марка самолета
-        * Расстояние
-        * Имеет конструктор для инициализации всех полей структуры
-        * Включает в себя такие методы как:
-        * Метод добавления нового рейса в список рейсов
-        * Метод вывода всего списка рейсов
-        * Метод вывода фильтрованого списка
-        */
+        static void Main(string[] args)
+        {
+            // список рейсов
+            List<Flight> flights = new List<Flight>();
+
+            // фильтр 
+            Filter filter = new Filter();
+
+            // стартовой страницей будет сообщение о параметрах фильтров с возможностью изменить
+            filter.FiltFromConsole();
+
+            // флаг нажатия клавиши
+            ConsoleKeyInfo pressed;
+
+            // удерживать меню:
+            do
+            {
+                // очистить консоль
+                Console.Clear();
+
+                // вывести меню включающее в себя:
+                Console.WriteLine("Выберите действие");
+                // сообщение о возможности добавления рейса по клавише - 1
+                Console.WriteLine($"1 - Добавить авиарейс");
+                // сообщение о возможности вывода всех рейсов на экран по клавише - 2
+                Console.WriteLine($"2 - Вывести все авиарейсы");
+                // сообщение о возможности вывода отфильтрованного списка рейсов на экран по клавише - 3
+                Console.WriteLine($"3 - Вывести отфильтрованные авиарейсы");
+                // сообщение о возможности установки значений фильтра по клавише - 4
+                Console.WriteLine($"4 - Установить значения фильтра");
+                // сообщение о возможности выхода из программы по клавише - Esc
+                Console.WriteLine($"Esc - Выйти");
+
+                // прочитать нажатую клавишу
+                pressed = Console.ReadKey();
+
+                // смотря какая клавиша нажата, перейти к определённой функции
+                switch (pressed.Key)
+                {
+                    // перейти к функции добавления рейса по клавише - 1
+                    case ConsoleKey.D1:
+                        Flight.AddFlight(flights);
+                        break;
+                    // перейти к функции вывода всех рейсов на экран по клавише - 2
+                    case ConsoleKey.D2:
+                        Flight.OutputFlights(ref flights);
+                        break;
+                    // перейти к функции вывода отфильтрованного списка рейсов на экран по клавише - 3
+                    case ConsoleKey.D3:
+                        Flight.FilterOut(flights, filter);
+                        break;
+                    // перейти к функции установки значений фильтра по клавише - 4
+                    case ConsoleKey.D4:
+                        filter.FiltFromConsole();
+                        break;
+                }
+
+                // очистить консоль
+                Console.Clear();                
+            }
+            while (pressed.Key != ConsoleKey.Escape); // пока не нажата клавиша Enter
+        }
+
+        // структура рейса
         struct Flight
         {
-            private int Number;             // Номер авиарейса
-            private DateTime DepartureTime; // Время вылета
-            private DateTime ArrivalTime;   // Время прилета
-            private string Direction;       // Направление
-            private string AircraftMark;    // Марка самолета
-            private int Distance;           // Расстояние
+            private int Number;             // номер авиарейса
+            private DateTime DepartureTime; // время вылета
+            private DateTime ArrivalTime;   // время прилета
+            private string Direction;       // направление
+            private string AircraftMark;    // марка самолета
+            private int Distance;           // расстояние
 
             ///<summary>Конструктор для инициализации всех полей структуры</summary>
             ///<param name="Number">номер авиарейса</param>
@@ -63,42 +113,46 @@ namespace Airport
             ///
             public static void AddFlight(List<Flight> flights)
             {
+                // попытка добавления нового рейса:
                 try
                 {
+                    // очистить консоль
                     Console.Clear();
 
-                    // Чтение с клавиатуры и запись во временные переменные:
+                    // чтение с клавиатуры и запись во временные переменные:
 
-                    // Номер рейса
+                    // номер рейса
                     Console.Write("Введите номер авиарейса: ");
                     int numb = Int32.Parse(Console.ReadLine());
 
-                    // Время вылета
+                    // время вылета
                     Console.Write("Введите дату и время вылета строго в формате [ДД/ММ/ГГГГ HH:MM:SS]: ");
                     DateTime d_time = DateTime.Parse(Console.ReadLine());
 
-                    // Время прилёта
+                    // время прилёта
                     Console.Write("Введите дату и время прилета строго в формате [ДД/ММ/ГГГГ HH:MM:SS]: ");
                     DateTime a_time = DateTime.Parse(Console.ReadLine());
 
-                    // Направление
+                    // направление
                     Console.Write("Введите направление ");
                     string dir = Console.ReadLine();
 
-                    // Марка самолёта
+                    // марка самолёта
                     Console.Write("Введите марку самолёта: ");
                     string mark = Console.ReadLine();
 
-                    // Расстояние
+                    // расстояние
                     Console.Write("Введите расстояние: ");
                     int dist = Int32.Parse(Console.ReadLine());
 
-                    // Добавление в список:
+                    // добавление в список:
                     flights.Add(new Flight(numb, d_time, a_time, dir, mark, dist));
 
                 }
+                // неудача:
                 catch
                 {
+                    // сообщение об ошибке введённых данных
                     Console.WriteLine("Ошибка добавления! Данные не корректны");
                     return;
                 }
@@ -109,20 +163,31 @@ namespace Airport
             /// 
             public static void OutputFlights(ref List<Flight> fligts)
             {
+                // очистить консоль
                 Console.Clear();
+
+                // флаг нажатия клавиши
                 ConsoleKeyInfo pressed;
+
+                // удерживать меню:
                 do
                 {
+                    // вывести в консоль заголовок
                     Console.WriteLine("Список всех рейсов: ");
 
-                    // Для каждого рейса
+                    // для каждого рейса из списка рейсов
                     foreach (var fligt in fligts)
                     {
-                        // Вывести информацию о рейсе
+                        // вывести информацию о рейсе
                         fligt.OutputFlight();
                     }
+                    // сообщение о возможности выхода по кнопке Enter
                     Console.WriteLine("Для выхода нажмите Enter");
+
+                    // считать нажатую кнопку
                     pressed = Console.ReadKey();
+
+                    // завершить цикл только если нажата кнопка Enter
                 } while (pressed.Key != ConsoleKey.Enter);
             }
             /// <summary>Вывод отфильтрованных рейсов </summary> 
@@ -130,12 +195,19 @@ namespace Airport
             /// <param name="filter"> Фильтр</param> 
             public static void FilterOut(List<Flight> flights, Filter filter)
             {
+                // очистить консоль
                 Console.Clear();
+
+                // флаг нажатия клавиши
                 ConsoleKeyInfo pressed;
+
+                // удерживать меню:
                 do
                 {
+                    // вывести в консоль заголовок
                     Console.WriteLine("Список всех рейсов: ");
 
+                    // Для каждого рейса из списка рейсов
                     foreach (var flight in flights)
                     {
                         //Проверка номера рейса 
@@ -162,35 +234,28 @@ namespace Airport
                         flight.OutputFlight();//Вывод отфильтрованного рейса на экран 
 
                     }
+
+                    // сообщение о возможности выхода по кнопке Enter
                     Console.WriteLine("Для выхода нажмите Enter");
+
+                    // считать нажатую кнопку
                     pressed = Console.ReadKey();
+
+                    // завершить цикл только если нажата кнопка Enter
                 } while (pressed.Key != ConsoleKey.Enter);
             }
         }
 
-        /* 
-        * Структура фильтра рейсов 
-        * которая имеет такие поля как: 
-        * Значение фильтра для поля "Номер Авиарейса" 
-        * Значение фильтра для поля "Время вылета" 
-        * Значение фильтра для поля "Время прилета" 
-        * Значение фильтра для поля "Направление" 
-        * Значение фильтра для поля "Марка самолета" 
-        * Значение фильтра для поля "Расстояние" 
-        * Имеет конструктор для инициализации всех полей структуры 
-        * которая имеет такие методы как: 
-        * Ввод значения введёного с клавиатуры типа Int 
-        * Ввод значения введёного с клавиатуры типа DateTime 
-        * Метод изменения значения фильтра 
-        */
+         
+        // структура фильтра рейсов 
         struct Filter
         {
-            public int minNumber, maxNumber; // Значение фильтра для поля "Номер Авиарейса" 
-            public DateTime DeparTimeMin, DeparTimeMax; // Значение фильтра для поля "Время вылета" 
-            public DateTime ArrTimeMin, ArrTimeMax; // Значение фильтра для поля "Время прилета" 
-            public string Direction; // Значение фильтра для поля "Направление" 
-            public string AircraftMFilt; // Значение фильтра для поля "Марка самолета" 
-            public int minDistance, maxDistance; // Значение фильтра для поля "Расстояние" 
+            public int minNumber, maxNumber;                // значение фильтра для поля "Номер Авиарейса" 
+            public DateTime DeparTimeMin, DeparTimeMax;     // значение фильтра для поля "Время вылета" 
+            public DateTime ArrTimeMin, ArrTimeMax;         // значение фильтра для поля "Время прилета" 
+            public string Direction;                        // значение фильтра для поля "Направление" 
+            public string AircraftMFilt;                    // значение фильтра для поля "Марка самолета" 
+            public int minDistance, maxDistance;            // значение фильтра для поля "Расстояние" 
 
             ///<summary>Конструктор для инициализации всех полей структуры</summary>
             ///<param name="minNumber">мин. номер авиарейса</param>
@@ -222,12 +287,13 @@ namespace Airport
                 this.minDistance = minDistance;
                 this.maxDistance = maxDistance;
             }
+
             //Установка значений фильтра 
             public void FiltFromConsole()
             {
-                ///меню действий по выбору поля фильтра
-                ///от пользователя требуется ввод числа от 1 до 10
-                ///иначе происходит выход в главное меню без фильтрации
+                //меню действий по выбору поля фильтра
+                //от пользователя требуется ввод числа от 1 до 10
+                //иначе происходит выход в главное меню без фильтрации
                 Console.Clear();
                 Console.WriteLine("Выбор поля фильтра");
                 Console.WriteLine($"1 - Минимальный номер рейса({minNumber})");
@@ -241,8 +307,9 @@ namespace Airport
                 Console.WriteLine($"9 - Минимальное расстояние полета({minDistance})");
                 Console.WriteLine($"10 -Максимальное расстояние полета({maxDistance})");
                 Console.WriteLine("Любое другое значение для выхода в меню");
-                ///проверка значения с клавиатуры
-                ///в соответствии с ним устанавливается соответствуещее значение фильтра
+
+                //проверка значения с клавиатуры
+                //в соответствии с ним устанавливается соответствуещее значение фильтра
                 switch (Console.ReadLine())
                 {
                     //установка минимального значения фильтрации по номеру рейса 
@@ -297,45 +364,6 @@ namespace Airport
                         break;
                 }
             }
-        }
-        static void Main(string[] args)
-        {
-            List<Flight> flights = new List<Flight>();
-
-            // Фильтр 
-            Filter filter = new Filter();
-            filter.FiltFromConsole();
-
-            ConsoleKeyInfo pressed;
-
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("Выберите действие");
-                Console.WriteLine($"1 - Добавить авиарейс");
-                Console.WriteLine($"2 - Вывести все авиарейсы");
-                Console.WriteLine($"3 - Вывести отфильтрованные авиарейсы");
-                Console.WriteLine($"4 - Установить значения фильтра");
-                Console.WriteLine($"Esc - Выйти");
-                pressed = Console.ReadKey();
-                switch (pressed.Key)
-                {
-                    case ConsoleKey.D1:
-                        Flight.AddFlight(flights);
-                        break;
-                    case ConsoleKey.D2:
-                        Flight.OutputFlights(ref flights);
-                        break;
-                    case ConsoleKey.D3:
-                        Flight.FilterOut(flights, filter);
-                        break;
-                    case ConsoleKey.D4:
-                        filter.FiltFromConsole();
-                        break;
-                }
-                Console.Clear();
-            }
-            while (pressed.Key != ConsoleKey.Escape);
         }
     }
 }
