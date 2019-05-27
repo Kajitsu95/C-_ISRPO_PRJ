@@ -14,25 +14,22 @@ namespace Airport
             Filter filter = new Filter();
             // инициализация фильтра
             filter.FiltFromConsole();
-
             
+            // меню
             ConsoleKeyInfo pressed;
-
             do
-            {                       
-                Console.Clear();
-
-                // вывод меню
+            {    
+                // вывод меню                   
+                Console.Clear();                
                 Console.WriteLine("Выберите действие");
                 Console.WriteLine($"1 - Добавить авиарейс");
                 Console.WriteLine($"2 - Вывести все авиарейсы");
                 Console.WriteLine($"3 - Вывести отфильтрованные авиарейсы");
                 Console.WriteLine($"4 - Установить значения фильтра");
                 Console.WriteLine($"Esc - Выйти");
-
-                pressed = Console.ReadKey();
-
+                
                 // обработка выбора пункта меню
+                pressed = Console.ReadKey();
                 switch (pressed.Key)
                 {                   
                     case ConsoleKey.D1: // добавление рейса
@@ -50,7 +47,7 @@ namespace Airport
                     case ConsoleKey.D4: // установка значений фильтра
                         filter.FiltFromConsole();
                         break;
-                }                
+                }           
                 Console.Clear();               
             } 
             while (pressed.Key != ConsoleKey.Escape);
@@ -96,7 +93,7 @@ namespace Airport
                 {
                     Console.Clear();
 
-                    // запись рейса:
+                    // запись информации о рейсе:
                     // номер рейса
                     Console.Write("Введите номер авиарейса: ");
                     int numb = Int32.Parse(Console.ReadLine());
@@ -133,11 +130,10 @@ namespace Airport
 
             // вывод списка рейсов
             public static void OutputFlights(ref List<Flight> fligts)
-            {
+            {                
+                // меню
                 Console.Clear();
-
                 ConsoleKeyInfo pressed;
-
                 do
                 {
                     Console.WriteLine("Список всех рейсов: ");
@@ -147,10 +143,8 @@ namespace Airport
                     {
                         // вывод информации о рейсе
                         fligt.OutputFlight();
-                    }
-                    
-                    Console.WriteLine("Для выхода нажмите Enter");
-
+                    }                   
+                    Console.WriteLine("Для выхода нажмите Enter");                   
                     pressed = Console.ReadKey();
                 } 
                 while (pressed.Key != ConsoleKey.Enter);
@@ -160,7 +154,6 @@ namespace Airport
             public static void FilterOut(List<Flight> flights, Filter filter)
             {
                 Console.Clear();
-
                 ConsoleKeyInfo pressed;
 
                 // вывод меню:
@@ -206,11 +199,9 @@ namespace Airport
                         // вывод отфильтрованного рейса 
                         flight.OutputFlight();
                     }
-
+                       //выход из подменю
                     Console.WriteLine("Для выхода нажмите Enter");
-
                     pressed = Console.ReadKey();
-                    
                 } 
                 while (pressed.Key != ConsoleKey.Enter);
             }
