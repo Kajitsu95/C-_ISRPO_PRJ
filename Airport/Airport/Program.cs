@@ -61,7 +61,7 @@ namespace Airport
                 }                
                 Console.Clear(); // очистить консоль                
             } 
-            while (pressed.Key != ConsoleKey.Escape); // пока не нажата клавиша Enter
+            while (pressed.Key != ConsoleKey.Escape); // пока не нажата клавиша Escape
         }
 
         // структура рейса
@@ -73,17 +73,6 @@ namespace Airport
             private string Direction;       // направление
             private string AircraftMark;    // марка самолета
             private int Distance;           // расстояние
-
-            // конструктор для инициализации всех полей структуры
-            public Flight(int Number, DateTime DepartureTime, DateTime ArrivalTime, string Direction, string AircraftMark, int Distance)
-            {
-                this.Number = Number;
-                this.DepartureTime = DepartureTime;
-                this.ArrivalTime = ArrivalTime;
-                this.Direction = Direction;
-                this.AircraftMark = AircraftMark;
-                this.Distance = Distance;
-            }
 
             // вывод одного рейса в консоль
             public void OutputFlight()
@@ -97,7 +86,7 @@ namespace Airport
                 Console.WriteLine("_________________________");
             }
 
-            // Метод добавление нового рейса в список рейсов
+            // метод добавление нового рейса в список рейсов
             public static void AddFlight(List<Flight> flights)
             {
                 // попытка добавления нового рейса:
@@ -107,27 +96,21 @@ namespace Airport
                     Console.Clear();
 
                     // чтение с клавиатуры и запись во временные переменные:
-
                     // номер рейса
                     Console.Write("Введите номер авиарейса: ");
                     int numb = Int32.Parse(Console.ReadLine());
-
                     // время вылета
                     Console.Write("Введите дату и время вылета строго в формате [ДД/ММ/ГГГГ HH:MM:SS]: ");
                     DateTime d_time = DateTime.Parse(Console.ReadLine());
-
                     // время прилёта
                     Console.Write("Введите дату и время прилета строго в формате [ДД/ММ/ГГГГ HH:MM:SS]: ");
                     DateTime a_time = DateTime.Parse(Console.ReadLine());
-
                     // направление
                     Console.Write("Введите направление ");
                     string dir = Console.ReadLine();
-
                     // марка самолёта
                     Console.Write("Введите марку самолёта: ");
                     string mark = Console.ReadLine();
-
                     // расстояние
                     Console.Write("Введите расстояние: ");
                     int dist = Int32.Parse(Console.ReadLine());
@@ -239,26 +222,6 @@ namespace Airport
             public string Direction;                        // значение фильтра для поля "Направление" 
             public string AircraftMFilt;                    // значение фильтра для поля "Марка самолета" 
             public int minDistance, maxDistance;            // значение фильтра для поля "Расстояние" 
-
-            // конструктор для инициализации всех полей структуры
-            Filter(
-                int minNumber, int maxNumber,
-                DateTime DeparTimeMin, DateTime DeparTimeMax,
-                DateTime ArrTimeMin, DateTime ArrTimeMax,
-                string Direction, string AircraftMFilt,
-                int minDistance, int maxDistance)
-            {
-                this.minNumber = minNumber;
-                this.maxNumber = maxNumber;
-                this.DeparTimeMin = DeparTimeMin;
-                this.DeparTimeMax = DeparTimeMax;
-                this.ArrTimeMin = ArrTimeMin;
-                this.ArrTimeMax = ArrTimeMax;
-                this.Direction = Direction;
-                this.AircraftMFilt = AircraftMFilt;
-                this.minDistance = minDistance;
-                this.maxDistance = maxDistance;
-            }
 
             //Установка значений фильтра 
             public void FiltFromConsole()
