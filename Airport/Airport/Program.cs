@@ -74,6 +74,17 @@ namespace Airport
             private string AircraftMark;    // марка самолета
             private int Distance;           // расстояние
 
+            // конструктор для инициализации всех полей структуры
+            public Flight(int Number, DateTime DepartureTime, DateTime ArrivalTime, string Direction, string AircraftMark, int Distance)
+            {
+                this.Number = Number;
+                this.DepartureTime = DepartureTime;
+                this.ArrivalTime = ArrivalTime;
+                this.Direction = Direction;
+                this.AircraftMark = AircraftMark;
+                this.Distance = Distance;
+            }
+            
             // вывод одного рейса в консоль
             public void OutputFlight()
             {
