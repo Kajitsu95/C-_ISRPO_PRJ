@@ -141,7 +141,6 @@ namespace Airport
                 {
                     // сообщение об ошибке введённых данных
                     Console.WriteLine("Ошибка добавления! Данные не корректны");
-                    return;
                 }
             }
 
@@ -194,25 +193,26 @@ namespace Airport
                     // Для каждого рейса из списка рейсов
                     foreach (var flight in flights)
                     {
-                        //Проверка номера рейса 
+                        // проверка полей фильтра:
+                        // номера рейса 
                         if (filter.minNumber != 0 && flight.Number > filter.minNumber) continue;
-                        //Проверка номера рейса 
+                        // номера рейса 
                         if (filter.maxNumber != 0 && flight.Number < filter.maxNumber) continue;
-                        //Проверка минимального времени вылета 
+                        // минимального времени вылета 
                         if (filter.DeparTimeMin != null && flight.DepartureTime > filter.DeparTimeMin) continue;
-                        //Проверка максимального времени вылета 
+                        // максимального времени вылета 
                         if (filter.DeparTimeMax != null && flight.DepartureTime < filter.DeparTimeMax) continue;
-                        //Проверка минимального времени прилета 
+                        // минимального времени прилета 
                         if (filter.ArrTimeMin != null && flight.ArrivalTime < filter.ArrTimeMin) continue;
-                        //Проверка максимального времени прилета 
+                        // максимального времени прилета 
                         if (filter.ArrTimeMax != null && flight.ArrivalTime > filter.ArrTimeMax) continue;
-                        //Проверка направления полета 
+                        // направления полета 
                         if (filter.Direction != "" && flight.Direction.Contains(filter.Direction)) continue;
-                        //Проверка марки самолета 
+                        // марки самолета 
                         if (filter.AircraftMFilt != "" && flight.AircraftMark.Contains(filter.AircraftMFilt)) continue;
-                        //Проверка минимального расстояния 
+                        // минимального расстояния 
                         if (filter.minDistance != 0 && flight.Distance < filter.minDistance) continue;
-                        //Проверка максимального расстояния 
+                        // максимального расстояния 
                         if (filter.maxDistance != 0 && flight.Distance > filter.maxDistance) continue;
 
                         //Вывод отфильтрованного рейса на экран 
