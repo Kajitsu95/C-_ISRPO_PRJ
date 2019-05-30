@@ -52,9 +52,10 @@ namespace Airport
                         filter.FiltFromConsole();
                         break;
                 }
+                
                 // обновление интерфейса
                 Console.Clear();
-            }
+            }            
             // условие выхода из главного меню
             while (pressed.Key != ConsoleKey.Escape);
         }
@@ -66,9 +67,18 @@ namespace Airport
             private DateTime DepartureTime; // время вылета
             private DateTime ArrivalTime;   // время прилета
             private string Direction;       // направление
-            private string AircraftMark;    // марка самолета
+            private string AircraftMark;    // модель самолета
             private int Distance;           // расстояние
-
+            
+            /// <summary>
+            /// инициализация рейса
+            /// </summary>
+            /// <param name="Number"> номер авиарейса</param>
+            /// <param name="DepartureTime"> время вылета</param>
+            /// <param name="ArrivalTime"> время прилета</param>
+            /// <param name="Direction"> направление</param>
+            /// <param name="AircraftMark"> модель самолета</param>
+            /// <param name="Distance"> расстояние</param>
             public Flight(int Number, DateTime DepartureTime, DateTime ArrivalTime, string Direction, string AircraftMark, int Distance)
             {
                 this.Number = Number;
@@ -91,7 +101,10 @@ namespace Airport
                 Console.WriteLine("_________________________");
             }
 
-            //  добавление нового рейса в список рейсов
+            /// <summary>
+            /// добавление нового рейса в список рейсов
+            /// </summary>
+            /// <param name="flights"> список рейсов</param>
             public static void AddFlight(List<Flight> flights)
             {
                 // попытка добавления нового рейса:
@@ -136,7 +149,10 @@ namespace Airport
                 }
             }
 
-            // вывод списка рейсов
+            /// <summary>
+            /// вывод списка рейсов
+            /// </summary>
+            /// <param name="flights"> список рейсов</param>
             public static void OutputFlights(ref List<Flight> fligts)
             {     
                 // обновление интерфейса
@@ -155,7 +171,8 @@ namespace Airport
                         // вывод информации о рейсе
                         fligt.OutputFlight();
                     }
-                    //выход из меню
+                    
+                    // выход из меню
                     Console.WriteLine("Для выхода нажмите Enter");                   
                     pressed = Console.ReadKey();
                 } 
@@ -163,7 +180,9 @@ namespace Airport
                 while (pressed.Key != ConsoleKey.Enter);
             }
             
-            // вывод отфильтрованных рейсов
+            /// <summary> вывод отфильтрованных рейсов </summary> 
+            /// <param name="fligts"> список рейсов</param> 
+            /// <param name="filter"> фильтр</param>
             public static void FilterOut(List<Flight> flights, Filter filter)
             {
                 // обновление интерфейса
@@ -280,7 +299,7 @@ namespace Airport
                         ArrTimeMin = DateTime.Parse(Console.ReadLine());
                         break;
                    
-                    case "6": //Установка мамксимального значения фильтра по дате прилета
+                    case "6": // установка мамксимального значения фильтра по дате прилета
                         Console.Write("Введите максимальную дату прилета строго в формате [ДД/ММ/ГГГГ HH:MM:SS]: ");
                         ArrTimeMax = DateTime.Parse(Console.ReadLine());
                         break;
