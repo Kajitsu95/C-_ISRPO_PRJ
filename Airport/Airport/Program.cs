@@ -17,11 +17,11 @@ namespace Airport
             
             // обновление интерфейса
             ConsoleKeyInfo pressed;
-            Console.Clear(); 
+            Console.Clear();
             
             // меню
             do
-            {    
+            {   
                 // вывод меню
                 Console.WriteLine("Выберите действие");
                 Console.WriteLine($"1 - Добавить авиарейс");
@@ -30,8 +30,10 @@ namespace Airport
                 Console.WriteLine($"4 - Установить значения фильтра");
                 Console.WriteLine($"Esc - Выйти");
                 
-                // обработка выбора пункта меню
+                // выбор пункта меню
                 pressed = Console.ReadKey();
+                
+                // выполнить выбранный пункт
                 switch (pressed.Key)
                 {                   
                     case ConsoleKey.D1: // добавление рейса
@@ -49,11 +51,11 @@ namespace Airport
                     case ConsoleKey.D4: // установка значений фильтра
                         filter.FiltFromConsole();
                         break;
-                } 
+                }
                 // обновление интерфейса
-                Console.Clear();               
+                Console.Clear();
             }
-            // условие выхода из программы
+            // условие выхода из главного меню
             while (pressed.Key != ConsoleKey.Escape);
         }
 
@@ -234,7 +236,7 @@ namespace Airport
             // установка значений фильтра 
             public void FiltFromConsole()
             {
-                // вывод подменю полей фильтра
+                // вывод подменю фильтра
                 Console.Clear();
                 Console.WriteLine("Выбор поля фильтра");
                 Console.WriteLine($"1 - Минимальный номер рейса({minNumber})");
